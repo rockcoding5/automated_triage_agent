@@ -35,22 +35,11 @@ The agent is built using the **Google Agent Development Kit (ADK)**. It is progr
 
 ---
 
-## 🚀 Deployment Workflow
-The agent was deployed using a single-shot `uvx` command to ensure the build environment was clean and consistent with production requirements:
+## Implementation Guide
 
-```bash
-uvx --from google-adk==1.14.0 \
-adk deploy cloud_run \
-  --project=$PROJECT_ID \
-  --region=us-central1 \
-  --service_name=automated-triage-agent \
-  --app_name=triage_agent \
-  --with_ui \
-  . \
-  -- \
-  --service-account=$SERVICE_ACCOUNT \
-  --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=1,MODEL=gemini-1.5-flash"
-```
+Full setup steps are available here:
+
+[Implementation Steps](docs/implementation_steps.md)
 
 ---
 
@@ -74,4 +63,4 @@ You can immediately start interacting with the Triage Agent directly on the UI u
 | 9 | `"EACCES: permission denied, open '/root/config'"` | "**Category:** Permissions <br><br> **Cause:** Current user lacks read/write access. <br><br> **Resolution:** Use `sudo` or adjust file permissions with `chmod`." | Permissions Triage |
 | 10 | `"How is the weather today?"` | "I am specifically designed for triage summarization and cannot assist with other queries." | Guardrail Validation |
 
-![Accessing the Agent](Accessing_the_Agent_ADK_Web.png)
+![Accessing the Agent](docs/Accessing_the_Agent_ADK_Web.png)
