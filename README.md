@@ -18,22 +18,6 @@ This project focuses on the development and deployment of an intelligent **Senio
 
 ---
 
-| # | User Input | Expected Response (Approximate) | Purpose |
-| :--- | :--- | :--- | :--- |
-| 1 | `"Hello"` | "Hello! I am the Automated Triage Agent. I help summarize logs and error text." | Greeting Validation |
-| 2 | `"Error: ENOSPC: System limit reached"` | "**Category:** OS/Disk <br><br> **Cause:** Max inotify watches reached. <br><br> **Resolution:** Increase `fs.inotify.max_user_watches`." | OS Limit Triage |
-| 3 | `"Fatal Error: Out of memory (allocated 20971520)"` | "**Category:** Resource Allocation <br><br> **Cause:** RAM limit exceeded. <br><br> **Resolution:** Increase server memory or optimize code." | Memory Triage |
-| 4 | `"EADDRINUSE: address already in use :::8080"` | "**Category:** Network <br><br> **Cause:** Port 8080 is being used by another process. <br><br> **Resolution:** Kill the process on `8080` or change the app port." | Port Conflict Triage |
-| 5 | `"EACCES: permission denied, open '/root/config'"` | "**Category:** Permissions <br><br> **Cause:** Current user lacks read/write access. <br><br> **Resolution:** Use `sudo` or adjust file permissions with `chmod`." | Permissions Triage |
-| 6 | `"ModuleNotFoundError: No module named 'pandas'"` | "**Category:** Dependency <br><br> **Cause:** Required library is missing from the environment. <br><br> **Resolution:** Run `pip install pandas`." | Logic/Lib Triage |
-| 7 | `"504 Gateway Timeout"` | "**Category:** Network/Web <br><br> **Cause:** Upstream server failed to respond in time. <br><br> **Resolution:** Check server health or increase timeout settings." | Web Error Triage |
-| 8 | `"401 Unauthorized: Invalid API Key"` | "**Category:** Security <br><br> **Cause:** Authentication credentials failed or are missing. <br><br> **Resolution:** Verify API keys and environment variables." | Security Triage |
-| 9 | `"How is the weather today?"` | "I am specifically designed for triage summarization and cannot assist with other queries." | Guardrail Validation |
-| 10 | `"Tell me a joke."` | "I am focused strictly on DevOps triage tasks and do not provide general entertainment." | Guardrail Validation |
-
-
----
-
 ## 🛠️ Technical Implementation
 
 ### 1. The Agent Logic (`agent.py`)
@@ -66,3 +50,28 @@ adk deploy cloud_run \
   -- \
   --service-account=$SERVICE_ACCOUNT \
   --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=1,MODEL=gemini-1.5-flash"
+```
+
+---
+
+## 🌐 Accessing the Agent (ADK Web UI)
+Upon successful deployment, the terminal will output a public Service URL.
+(Example: https://automated-triage-agent-12345abcde-uc.a.run.app)
+Click or paste this URL into your web browser.
+The link will automatically load the ADK Web UI, providing a clean, built-in chat interface.
+You can immediately start interacting with the Triage Agent directly on the UI using the test cases below.
+
+| # | User Input | Expected Response (Approximate) | Purpose |
+| :--- | :--- | :--- | :--- |
+| 1 | `"Hello"` | "Hello! I am the Automated Triage Agent. I help summarize logs and error text." | Greeting Validation |
+| 2 | `"Tell me a joke."` | "I am specifically designed for triage summarization and cannot assist with other queries like telling jokes." | Guardrail Validation |
+| 3 | `"ModuleNotFoundError: No module named 'pandas'"` | "**Category:** Dependency <br><br> **Cause:** The Python interpreter could not find the 'pandas' module because it is not installed in the current environment or is not accessible in the Python path. <br><br> **Resolution:** Install the missing 'pandas' package using a package manager, typically pip install pandas, within the active Python environment." | Logic/Lib Triage |
+| 4 | `"401 Unauthorized: Invalid API Key"` | "**Category:** Authentication/Authorization <br><br> **Cause:** The API key provided with the request is either missing, invalid, expired, or does not have the necessary permissions to access the requested resource. <br><br> **Resolution:** Verify that the correct and valid API key is being used. Ensure it is included in the request as specified by the API documentation (e.g., in a header, query parameter, or request body). If necessary, generate a new API key from the service provider's dashboard." | Security Triage |
+| 5 | `"504 Gateway Timeout"` | "**Category:** Networking/Server-side <br><br> **Cause:** The server acting as a gateway or proxy did not receive a timely response from an upstream server, indicating a delay or failure in communication between them. <br><br> **Resolution:** Investigate the health and performance of the upstream server, check its logs for errors or high load, verify network connectivity between the proxy and the upstream server, and consider adjusting timeout configurations on the proxy if the upstream server is expected to take longer to respond." | Web Error Triage |
+| 6 | `"Error: ENOSPC: System limit reached"` | "**Category:** OS/Disk <br><br> **Cause:** Max inotify watches reached. <br><br> **Resolution:** Increase `fs.inotify.max_user_watches`." | OS Limit Triage |
+| 7 | `"Fatal Error: Out of memory (allocated 20971520)"` | "**Category:** Resource Allocation <br><br> **Cause:** RAM limit exceeded. <br><br> **Resolution:** Increase server memory or optimize code." | Memory Triage |
+| 8 | `"EADDRINUSE: address already in use :::8080"` | "**Category:** Network <br><br> **Cause:** Port 8080 is being used by another process. <br><br> **Resolution:** Kill the process on `8080` or change the app port." | Port Conflict Triage |
+| 9 | `"EACCES: permission denied, open '/root/config'"` | "**Category:** Permissions <br><br> **Cause:** Current user lacks read/write access. <br><br> **Resolution:** Use `sudo` or adjust file permissions with `chmod`." | Permissions Triage |
+| 10 | `"How is the weather today?"` | "I am specifically designed for triage summarization and cannot assist with other queries." | Guardrail Validation |
+
+![Accessing the Agent](Accessing_the_Agent_ADK_Web.png)
